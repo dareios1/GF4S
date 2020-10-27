@@ -162,7 +162,7 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
               '送信',
               style: TextStyle(fontSize: 18),
             ),
-            color: Colors.grey,
+            color: Colors.green,
             shape: const StadiumBorder(),
             onPressed: () {
               Navigator.push(

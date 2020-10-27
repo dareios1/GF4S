@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'father_character_page3.dart';
-
-class FatherCharacterPage2 extends StatelessWidget {
+class FatherCharacterPage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +36,7 @@ class FatherCharacterPage2 extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 30.0)),
                   Text(
-                    '診断結果',
+                    '診断結果を保存しました',
                     style: TextStyle(
                       fontSize: 18,
                     ),
@@ -70,10 +68,10 @@ class FatherCharacterPage2 extends StatelessWidget {
             ),
             RaisedButton(
               child: const Text(
-                '保存',
+                '面談テーマルーレットに進む',
                 style: TextStyle(fontSize: 18),
               ),
-              color: Colors.green,
+              color: Colors.pinkAccent,
               shape: const StadiumBorder(),
               onPressed: () {
                 Navigator.push(
