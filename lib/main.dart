@@ -168,7 +168,11 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FatherCharacterPage2(),
+                    // 引数から選択肢を渡す
+                    builder: (context) => FatherCharacterPage2(
+                      choices1: _choices1,
+                      choices2: _choices2,
+                    ),
                   ));
             },
           ),
