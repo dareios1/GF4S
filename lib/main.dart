@@ -10,6 +10,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // 右上に表示される"debug"ラベルを消す
+      debugShowCheckedModeBanner: false,
       title: 'Growth Facilitator for Students',
       home: Scaffold(
         appBar: AppBar(
@@ -32,10 +34,9 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
   String _choices1 = '未選択';
   String _choices2 = '未選択';
 
-  void _handleRadioButton(String choices1) => setState(() {
+  void _handleRadioButton1(String choices1) => setState(() {
         _choices1 = choices1;
       });
-
   void _handleRadioButton2(String choices2) => setState(() {
         _choices2 = choices2;
       });
@@ -89,7 +90,7 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
                 activeColor: Colors.blueAccent,
                 value: 'A',
                 groupValue: _choices1,
-                onChanged: _handleRadioButton,
+                onChanged: _handleRadioButton1,
               ),
               Text('A.欲しいものは遠慮しすぎずに手に入れる。'),
             ],
@@ -100,7 +101,7 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
                 activeColor: Colors.blueAccent,
                 value: 'B',
                 groupValue: _choices1,
-                onChanged: _handleRadioButton,
+                onChanged: _handleRadioButton1,
               ),
               Text('B.自分と周囲とのバランスを大切にする。'),
             ],
@@ -111,7 +112,7 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
                 activeColor: Colors.blueAccent,
                 value: 'C',
                 groupValue: _choices1,
-                onChanged: _handleRadioButton,
+                onChanged: _handleRadioButton1,
               ),
               Text('C.つい自分の中の世界にひたりがちになる。'),
             ],
