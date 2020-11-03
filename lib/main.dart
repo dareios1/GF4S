@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   runApp(MyApp());
 }
 
@@ -17,9 +19,148 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Growth Facilitator for Students'),
+          backgroundColor: Colors.purpleAccent,
+        ),
+        endDrawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child: Text(
+                  'Growth Facilitator for Students',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.purpleAccent,
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text("HOME"),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                leading: Icon(Icons.emoji_people),
+                title: Text("お父さんページ - HOME"),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 57.0)),
+                    Text("性格診断テスト"),
+                  ],
+                ),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 57.0)),
+                    Text("面談テーマルーレット"),
+                  ],
+                ),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 57.0)),
+                    Text("自己開示アンケート"),
+                  ],
+                ),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 57.0)),
+                    Text("お子さん別アンケート"),
+                  ],
+                ),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                leading: Icon(Icons.pregnant_woman),
+                title: Text("お母さんページ - HOME"),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                leading: Icon(Icons.directions_walk),
+                title: Text("生徒さんページ - HOME"),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                leading: Icon(Icons.school),
+                title: Text("教師一覧ページ - HOME"),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text("ログアウト"),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+            ],
+          ),
         ),
         body: Center(
           child: FatherCharacterPage1(),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                color: Colors.blueAccent,
+              ),
+              title: Text(
+                'HOME',
+                style: TextStyle(color: Colors.blueAccent),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.emoji_people,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Father',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.pregnant_woman,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Mother',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.directions_walk,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Student',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.school,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Teacher',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -162,9 +303,12 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
           RaisedButton(
             child: const Text(
               '送信',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+              ),
             ),
-            color: Colors.green,
+            color: Colors.purpleAccent,
             shape: const StadiumBorder(),
             onPressed: () {
               Navigator.push(
@@ -271,6 +415,7 @@ class FatherCharacterPage2 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Growth Facilitator for Students"),
+        backgroundColor: Colors.purpleAccent,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
@@ -329,7 +474,7 @@ class FatherCharacterPage2 extends StatelessWidget {
                 '保存',
                 style: TextStyle(fontSize: 18),
               ),
-              color: Colors.green,
+              color: Colors.purpleAccent,
               shape: const StadiumBorder(),
               onPressed: () {
                 Navigator.push(
@@ -353,6 +498,7 @@ class FatherCharacterPage3 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Growth Facilitator for Students"),
+        backgroundColor: Colors.purpleAccent,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
@@ -418,7 +564,7 @@ class FatherCharacterPage3 extends StatelessWidget {
                 '面談テーマルーレットに進む',
                 style: TextStyle(fontSize: 18),
               ),
-              color: Colors.pinkAccent,
+              color: Colors.grey,
               shape: const StadiumBorder(),
               onPressed: () {
                 Navigator.push(
