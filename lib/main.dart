@@ -476,7 +476,12 @@ class FatherCharacterPage2 extends StatelessWidget {
               ),
               color: Colors.purpleAccent,
               shape: const StadiumBorder(),
-              onPressed: () {
+              onPressed: () async {
+                // ドキュメント作成
+                await Firestore.instance
+                    .collection('users')
+                    .document('id_abc')
+                    .setData({'title': 'title', 'body': 'body'});
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -487,6 +492,60 @@ class FatherCharacterPage2 extends StatelessWidget {
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.blueAccent,
+            ),
+            title: Text(
+              'HOME',
+              style: TextStyle(color: Colors.blueAccent),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.emoji_people,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Father',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.pregnant_woman,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Mother',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.directions_walk,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Student',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.school,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Teacher',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -577,6 +636,60 @@ class FatherCharacterPage3 extends StatelessWidget {
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.blueAccent,
+            ),
+            title: Text(
+              'HOME',
+              style: TextStyle(color: Colors.blueAccent),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.emoji_people,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Father',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.pregnant_woman,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Mother',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.directions_walk,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Student',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.school,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Teacher',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+        ],
       ),
     );
   }
