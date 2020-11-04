@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -642,11 +644,11 @@ class FatherCharacterPage3 extends StatelessWidget {
               color: Colors.grey,
               shape: const StadiumBorder(),
               onPressed: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => FatherInterviewRoulettePage1(),
-                //     ));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FatherInterviewRoulettePage1(),
+                    ));
               },
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -716,4 +718,361 @@ class FatherCharacterPage3 extends StatelessWidget {
   }
 }
 
-class FatherInterviewRoulettePage1 {}
+class FatherInterviewRoulettePage1 extends StatefulWidget {
+  @override
+  _FatherInterviewRoulettePage1State createState() =>
+      _FatherInterviewRoulettePage1State();
+}
+
+class _FatherInterviewRoulettePage1State
+    extends State<FatherInterviewRoulettePage1> {
+  String _theme;
+
+  //配列からランダムに文字を選ぶ関数
+  choices() {
+    setState(() {
+      List<String> words = [
+        '子どもと同じくらいの歳の頃は、どんなことをしていたか',
+        '両親との関係性',
+        '学生時代の人生の分かれ道とは',
+        '学生時代の恋愛について',
+        'ずっと大切にしたい幸せな思い出について',
+        '大人になって一番影響を与えてくれた人について',
+        '人生で最高だと思った旅について',
+        '人生で一番誇らしく思うこと',
+        'いつも子どもに言いたかったけれど、なかなか言えなかったこと',
+        '一番後悔していること',
+        '人生でもっと時間を割くべきだったと思うこと',
+        'もしすべてやり直せるとしたら、同じキャリアを選ぶか',
+      ];
+      _theme = words[Random().nextInt(words.length)];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Growth Facilitator for Students"),
+        backgroundColor: Colors.purpleAccent,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
+        child: Column(
+          children: <Widget>[
+            Center(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'お父さんページ',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  Text(
+                    '信頼関係づくりステージ',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  Text(
+                    '面談テーマルーレット',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  Text(
+                    'ここでは、面談当日のテーマをランダムに決定します。ルーレット開始ボタンを押した後、保存ボタンを押してください。',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  Column(
+                    children: <Widget>[
+                      RaisedButton(
+                        child: const Text(
+                          'ルーレット開始',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                        color: Colors.purpleAccent,
+                        shape: const StadiumBorder(),
+                        onPressed: () {
+                          choices();
+                        },
+                      ),
+                      Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                      RichText(
+                        text: TextSpan(
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: _theme,
+                              style: TextStyle(
+                                color: Colors.purpleAccent,
+                                fontSize: 30.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                ],
+              ),
+            ),
+            RaisedButton(
+              child: const Text(
+                '保存',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+              color: Colors.purpleAccent,
+              shape: const StadiumBorder(),
+              // onPressed: () async {
+              // // ドキュメント作成
+              // await Firestore.instance
+              //     .collection('users')
+              //     .document('id_abc')
+              //     .setData({'title': 'title', 'body': 'body'});
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          FatherInterviewRoulettePage2(theme: _theme),
+                    ));
+              },
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 30.0)),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.blueAccent,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'HOME',
+              style: TextStyle(color: Colors.blueAccent),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.emoji_people,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Father',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.pregnant_woman,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Mother',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.directions_walk,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Student',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.school,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Teacher',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FatherInterviewRoulettePage2 extends StatelessWidget {
+  const FatherInterviewRoulettePage2({
+    Key key,
+    @required this.theme,
+  }) : super(key: key);
+
+  final String theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Growth Facilitator for Students"),
+        backgroundColor: Colors.purpleAccent,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
+        child: Column(
+          children: <Widget>[
+            Center(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'お父さんページ',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  Text(
+                    '信頼関係づくりステージ',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  Text(
+                    '面談テーマルーレット',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  Text(
+                    '結果を保存しました',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: theme,
+                          style: TextStyle(
+                            color: Colors.purpleAccent,
+                            fontSize: 30.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                  Text(
+                    '面談当日、上記テーマについて5分程度でお話できるようにご準備をお願いいたします。信頼関係づくりステージは以上になります。お時間のある方は、成長促進ステージへお進みください。',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                ],
+              ),
+            ),
+            RaisedButton(
+              child: const Text(
+                'お父さんページ - HOME に戻る',
+                style: TextStyle(fontSize: 18),
+              ),
+              color: Colors.grey,
+              shape: const StadiumBorder(),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyApp(),
+                    ));
+              },
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 30.0)),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.blueAccent,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'HOME',
+              style: TextStyle(color: Colors.blueAccent),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.emoji_people,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Father',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.pregnant_woman,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Mother',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.directions_walk,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Student',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.school,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Teacher',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
