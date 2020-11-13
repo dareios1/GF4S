@@ -6,6 +6,648 @@ import 'package:provider/provider.dart';
 
 import 'main.dart';
 
+// HOME画面　土台
+class FatherHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // ユーザー情報を受け取る
+    final UserState userState = Provider.of<UserState>(context);
+    final FirebaseUser user = userState.user;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: kButtonColorPrimary,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icon(Icons.arrow_back_ios),
+        ),
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              // ユーザー情報を表示
+              child: Text(
+                'ログイン情報：${user.email}',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: kButtonColorPrimary,
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("HOME"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              leading: Icon(Icons.emoji_people),
+              title: Text("お父さんページ - HOME"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  Padding(padding: EdgeInsets.only(left: 57.0)),
+                  Text("性格診断テスト"),
+                ],
+              ),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  Padding(padding: EdgeInsets.only(left: 57.0)),
+                  Text("面談テーマルーレット"),
+                ],
+              ),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  Padding(padding: EdgeInsets.only(left: 57.0)),
+                  Text("自己開示アンケート"),
+                ],
+              ),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Row(
+                children: [
+                  Padding(padding: EdgeInsets.only(left: 57.0)),
+                  Text("お子さん別アンケート"),
+                ],
+              ),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              leading: Icon(Icons.pregnant_woman),
+              title: Text("お母さんページ - HOME"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              leading: Icon(Icons.directions_walk),
+              title: Text("生徒さんページ - HOME"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              leading: Icon(Icons.school),
+              title: Text("教師一覧ページ - HOME"),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("ログアウト"),
+              trailing: IconButton(
+                icon: Icon(Icons.arrow_forward),
+                onPressed: () async {
+                  // ログアウト処理
+                  // 内部で保持しているログイン情報等が初期化される
+                  // （現時点ではログアウト時はこの処理を呼び出せばOK）
+                  await FirebaseAuth.instance.signOut();
+                  // ログイン画面に遷移＋画面を破棄
+                  await Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) {
+                      return LoginPage();
+                    }),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(top: 30),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        _PageGreen(),
+                        _PageRed(),
+                        _PageBlue(),
+                        _PageOrange(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.cyan,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'HOME',
+              style: TextStyle(color: Colors.cyan),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.emoji_people,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Father',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.pregnant_woman,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Mother',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.directions_walk,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Student',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.school,
+              color: Colors.grey,
+            ),
+            // ignore: deprecated_member_use
+            title: Text(
+              'Teacher',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// HOME画面　パーツ
+class _Page1 extends StatelessWidget {
+  final String name;
+  final String message;
+  final Color colorPrimary;
+  final Color colorPositive;
+  final String textPositive;
+
+  const _Page1({
+    Key key,
+    @required this.name,
+    @required this.message,
+    @required this.colorPrimary,
+    @required this.colorPositive,
+    @required this.textPositive,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Card(
+        elevation: 8,
+        shadowColor: Colors.grey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            ListTile(
+              leading: ClipOval(
+                child: Container(
+                  color: colorPrimary,
+                  width: 48,
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      name.substring(0, 1),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 72),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colorPrimary, width: 4),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Flexible(child: Text(message)),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: colorPositive.withOpacity(0.2),
+                      textColor: colorPositive,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FatherCharacterPage1(),
+                            ));
+                      },
+                      child: Text(textPositive),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Page2 extends StatelessWidget {
+  final String name;
+  final String message;
+  final Color colorPrimary;
+  final Color colorPositive;
+  final String textPositive;
+
+  const _Page2({
+    Key key,
+    @required this.name,
+    @required this.message,
+    @required this.colorPrimary,
+    @required this.colorPositive,
+    @required this.textPositive,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Card(
+        elevation: 8,
+        shadowColor: Colors.grey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            ListTile(
+              leading: ClipOval(
+                child: Container(
+                  color: colorPrimary,
+                  width: 48,
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      name.substring(0, 1),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 72),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colorPrimary, width: 4),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Flexible(child: Text(message)),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: colorPositive.withOpacity(0.2),
+                      textColor: colorPositive,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  FatherInterviewRoulettePage1(),
+                            ));
+                      },
+                      child: Text(textPositive),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Page3 extends StatelessWidget {
+  final String name;
+  final String message;
+  final Color colorPrimary;
+  final Color colorPositive;
+  final String textPositive;
+
+  const _Page3({
+    Key key,
+    @required this.name,
+    @required this.message,
+    @required this.colorPrimary,
+    @required this.colorPositive,
+    @required this.textPositive,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Card(
+        elevation: 8,
+        shadowColor: Colors.grey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            ListTile(
+              leading: ClipOval(
+                child: Container(
+                  color: colorPrimary,
+                  width: 48,
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      name.substring(0, 1),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 72),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colorPrimary, width: 4),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Flexible(child: Text(message)),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: colorPositive.withOpacity(0.2),
+                      textColor: colorPositive,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FatherSelfDisclosurePage1(),
+                            ));
+                      },
+                      child: Text(textPositive),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Page4 extends StatelessWidget {
+  final String name;
+  final String message;
+  final Color colorPrimary;
+  final Color colorPositive;
+  final String textPositive;
+
+  const _Page4({
+    Key key,
+    @required this.name,
+    @required this.message,
+    @required this.colorPrimary,
+    @required this.colorPositive,
+    @required this.textPositive,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Card(
+        elevation: 8,
+        shadowColor: Colors.grey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            ListTile(
+              leading: ClipOval(
+                child: Container(
+                  color: colorPrimary,
+                  width: 48,
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      name.substring(0, 1),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 72),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colorPrimary, width: 4),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Flexible(child: Text(message)),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: colorPositive.withOpacity(0.2),
+                      textColor: colorPositive,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FatherCharacterPage1(),
+                            ));
+                      },
+                      child: Text(textPositive),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PageGreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _Page1(
+      name: '性格診断テスト',
+      message: 'エニアグラムを用いた性格診断テスト',
+      colorPrimary: Colors.greenAccent[400],
+      colorPositive: Colors.greenAccent[400],
+      textPositive: 'SELECT',
+    );
+  }
+}
+
+class _PageRed extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _Page2(
+      name: '面談テーマルーレット',
+      message: '面談当日のテーマをランダムに決定',
+      colorPrimary: Colors.redAccent,
+      colorPositive: Colors.redAccent,
+      textPositive: 'SELECT',
+    );
+  }
+}
+
+class _PageBlue extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _Page3(
+      name: '自己開示アンケート',
+      message: 'お父さん自身の自己開示を促すアンケート',
+      colorPrimary: Colors.blueAccent,
+      colorPositive: Colors.blueAccent,
+      textPositive: 'SELECT',
+    );
+  }
+}
+
+class _PageOrange extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _Page4(
+      name: 'お子さん別アンケート',
+      message: '将来の希望を理解するためのアンケート',
+      colorPrimary: Colors.orangeAccent[400],
+      colorPositive: Colors.orangeAccent[400],
+      textPositive: 'SELECT',
+    );
+  }
+}
+
 class FatherCharacterPage1 extends StatefulWidget {
   @override
   _FatherCharacterPage1State createState() => _FatherCharacterPage1State();
@@ -35,7 +677,11 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
             fontSize: 20,
           ),
         ),
-        backgroundColor: Colors.cyan,
+        backgroundColor: kButtonColorPrimary,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icon(Icons.arrow_back_ios),
+        ),
       ),
       endDrawer: Drawer(
         child: ListView(
@@ -267,16 +913,20 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                child: const Text(
+              child: FlatButton(
+                child: Text(
                   '送信',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(color: Colors.white, fontSize: 18),
                 ),
-                color: Colors.purpleAccent,
-                shape: const StadiumBorder(),
+                color: kButtonColorPrimary,
+                splashColor: kButtonTextColorPrimary,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -288,9 +938,6 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
                         ),
                       ));
                 },
-                highlightElevation: 16,
-                highlightColor: Colors.purple,
-                onHighlightChanged: (value) {},
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -302,12 +949,12 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(
@@ -638,16 +1285,20 @@ class FatherCharacterPage2 extends StatelessWidget {
             ),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                child: const Text(
+              child: FlatButton(
+                child: Text(
                   '保存',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(color: Colors.white, fontSize: 18),
                 ),
-                color: Colors.purpleAccent,
-                shape: const StadiumBorder(),
+                color: kButtonColorPrimary,
+                splashColor: kButtonTextColorPrimary,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 // onPressed: () async {
                 // // ドキュメント作成
                 // await Firestore.instance
@@ -664,9 +1315,6 @@ class FatherCharacterPage2 extends StatelessWidget {
                         ),
                       ));
                 },
-                highlightElevation: 16,
-                highlightColor: Colors.purple,
-                onHighlightChanged: (value) {},
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -678,12 +1326,12 @@ class FatherCharacterPage2 extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(
@@ -922,13 +1570,20 @@ class FatherCharacterPage3 extends StatelessWidget {
             ),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                child: const Text(
+              child: FlatButton(
+                child: Text(
                   '面談テーマルーレットに進む',
-                  style: TextStyle(fontSize: 18),
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(color: Colors.white, fontSize: 18),
                 ),
-                color: Colors.grey,
-                shape: const StadiumBorder(),
+                color: kButtonColorPrimary,
+                splashColor: kButtonTextColorPrimary,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -936,9 +1591,6 @@ class FatherCharacterPage3 extends StatelessWidget {
                         builder: (context) => FatherInterviewRoulettePage1(),
                       ));
                 },
-                highlightElevation: 16,
-                highlightColor: Colors.grey,
-                onHighlightChanged: (value) {},
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -950,12 +1602,12 @@ class FatherCharacterPage3 extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(
@@ -1197,22 +1849,23 @@ class _FatherInterviewRoulettePage1State
                     children: <Widget>[
                       SizedBox(
                         width: double.infinity,
-                        child: RaisedButton(
-                          child: const Text(
+                        child: FlatButton(
+                          child: Text(
                             'ルーレット開始',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .button
+                                .copyWith(color: Colors.white, fontSize: 18),
                           ),
-                          color: Colors.purpleAccent,
-                          shape: const StadiumBorder(),
+                          color: kButtonColorPrimary,
+                          splashColor: kButtonTextColorPrimary,
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                           onPressed: () {
                             choices();
                           },
-                          highlightElevation: 16,
-                          highlightColor: Colors.purple,
-                          onHighlightChanged: (value) {},
                         ),
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -1238,16 +1891,20 @@ class _FatherInterviewRoulettePage1State
             ),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                child: const Text(
+              child: FlatButton(
+                child: Text(
                   '保存',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(color: Colors.white, fontSize: 18),
                 ),
-                color: Colors.purpleAccent,
-                shape: const StadiumBorder(),
+                color: kButtonColorPrimary,
+                splashColor: kButtonTextColorPrimary,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 // onPressed: () async {
                 // // ドキュメント作成
                 // await Firestore.instance
@@ -1262,9 +1919,6 @@ class _FatherInterviewRoulettePage1State
                             FatherInterviewRoulettePage2(theme: _theme),
                       ));
                 },
-                highlightElevation: 16,
-                highlightColor: Colors.purple,
-                onHighlightChanged: (value) {},
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -1276,12 +1930,12 @@ class _FatherInterviewRoulettePage1State
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(
@@ -1523,13 +2177,20 @@ class FatherInterviewRoulettePage2 extends StatelessWidget {
             ),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                child: const Text(
+              child: FlatButton(
+                child: Text(
                   '自己開示アンケートに進む',
-                  style: TextStyle(fontSize: 18),
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(color: Colors.white, fontSize: 18),
                 ),
-                color: Colors.grey,
-                shape: const StadiumBorder(),
+                color: kButtonColorPrimary,
+                splashColor: kButtonTextColorPrimary,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -1537,9 +2198,6 @@ class FatherInterviewRoulettePage2 extends StatelessWidget {
                         builder: (context) => FatherSelfDisclosurePage1(),
                       ));
                 },
-                highlightElevation: 16,
-                highlightColor: Colors.grey,
-                onHighlightChanged: (value) {},
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -1551,12 +2209,12 @@ class FatherInterviewRoulettePage2 extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(
@@ -2066,16 +2724,20 @@ class _FatherSelfDisclosurePage1State extends State<FatherSelfDisclosurePage1> {
             ),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                child: const Text(
+              child: FlatButton(
+                child: Text(
                   '送信',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(color: Colors.white, fontSize: 18),
                 ),
-                color: Colors.purpleAccent,
-                shape: const StadiumBorder(),
+                color: kButtonColorPrimary,
+                splashColor: kButtonTextColorPrimary,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -2092,9 +2754,6 @@ class _FatherSelfDisclosurePage1State extends State<FatherSelfDisclosurePage1> {
                         ),
                       ));
                 },
-                highlightElevation: 16,
-                highlightColor: Colors.purple,
-                onHighlightChanged: (value) {},
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -2106,12 +2765,12 @@ class _FatherSelfDisclosurePage1State extends State<FatherSelfDisclosurePage1> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(
@@ -2584,16 +3243,20 @@ class FatherSelfDisclosurePage2 extends StatelessWidget {
             ),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                child: const Text(
+              child: FlatButton(
+                child: Text(
                   '保存',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(color: Colors.white, fontSize: 18),
                 ),
-                color: Colors.purpleAccent,
-                shape: const StadiumBorder(),
+                color: kButtonColorPrimary,
+                splashColor: kButtonTextColorPrimary,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 // onPressed: () async {
                 // // ドキュメント作成
                 // await Firestore.instance
@@ -2615,9 +3278,6 @@ class FatherSelfDisclosurePage2 extends StatelessWidget {
                         ),
                       ));
                 },
-                highlightElevation: 16,
-                highlightColor: Colors.purple,
-                onHighlightChanged: (value) {},
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -2629,12 +3289,12 @@ class FatherSelfDisclosurePage2 extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(
@@ -3107,13 +3767,20 @@ class FatherSelfDisclosurePage3 extends StatelessWidget {
             ),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
-                child: const Text(
+              child: FlatButton(
+                child: Text(
                   'お子さん別アンケートに進む',
-                  style: TextStyle(fontSize: 18),
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(color: Colors.white, fontSize: 18),
                 ),
-                color: Colors.grey,
-                shape: const StadiumBorder(),
+                color: kButtonColorPrimary,
+                splashColor: kButtonTextColorPrimary,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -3121,9 +3788,6 @@ class FatherSelfDisclosurePage3 extends StatelessWidget {
                         builder: (context) => FatherCharacterPage1(),
                       ));
                 },
-                highlightElevation: 16,
-                highlightColor: Colors.grey,
-                onHighlightChanged: (value) {},
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
@@ -3135,12 +3799,12 @@ class FatherSelfDisclosurePage3 extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(

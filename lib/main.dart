@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'father.dart';
+
 const Color kAccentColor = Color(0xFFFE7C64);
-const Color kBackgroundColor = Color(0xFF19283D);
-const Color kTextColorPrimary = Color(0xFFECEFF1);
-const Color kTextColorSecondary = Color(0xFFB0BEC5);
-const Color kButtonColorPrimary = Color(0xFFECEFF1);
-const Color kButtonTextColorPrimary = Color(0xFF455A64);
-const Color kIconColor = Color(0xFF455A64);
+const Color kBackgroundColor = Color(0xFFEEEEEE);
+const Color kTextColorSecondary = Color(0xFF303030);
+const Color kButtonColorPrimary = Color(0xFF00B8D4);
+const Color kButtonTextColorPrimary = Color(0xFFECEFF1);
 
 void main() {
   runApp(MyApp());
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'KAIG',
-        theme: ThemeData.dark().copyWith(
+        theme: ThemeData.light().copyWith(
           accentColor: kAccentColor,
         ),
         home: LoginPage(),
@@ -78,7 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: InputDecoration(labelText: 'E-mail'),
+                      decoration: InputDecoration(
+                          labelText: 'E-mail',
+                          labelStyle: TextStyle(color: kTextColorSecondary)),
                       onChanged: (String value) {
                         setState(() {
                           email = value;
@@ -87,7 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 48),
                     TextFormField(
-                      decoration: InputDecoration(labelText: 'Password'),
+                      decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: kTextColorSecondary)),
                       obscureText: true,
                       onChanged: (String value) {
                         setState(() {
@@ -103,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                           .bodyText2
                           .copyWith(color: kTextColorSecondary),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 40),
                     Container(
                       width: double.infinity,
                       child: FlatButton(
@@ -141,8 +145,10 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text(
                           'Register',
-                          style: Theme.of(context).textTheme.button.copyWith(
-                              color: kButtonTextColorPrimary, fontSize: 18),
+                          style: Theme.of(context)
+                              .textTheme
+                              .button
+                              .copyWith(color: Colors.white, fontSize: 18),
                         ),
                       ),
                     ),
@@ -192,8 +198,10 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text(
                           'Log in',
-                          style: Theme.of(context).textTheme.button.copyWith(
-                              color: kButtonTextColorPrimary, fontSize: 18),
+                          style: Theme.of(context)
+                              .textTheme
+                              .button
+                              .copyWith(color: Colors.white, fontSize: 18),
                         ),
                       ),
                     ),
@@ -278,7 +286,7 @@ class _HeaderTitle extends StatelessWidget {
         Text(
           'K A I G',
           style: Theme.of(context).textTheme.headline4.copyWith(
-                color: kTextColorPrimary,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
         ),
@@ -288,7 +296,7 @@ class _HeaderTitle extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .subtitle2
-              .copyWith(color: kTextColorPrimary),
+              .copyWith(color: Colors.white),
         ),
       ],
     );
@@ -358,8 +366,38 @@ class HomePage extends StatelessWidget {
             fontSize: 20,
           ),
         ),
-        backgroundColor: Colors.cyan,
+        backgroundColor: kButtonColorPrimary,
       ),
+      // デコる時使えるやつ(その代わりdrawerと共存できない)
+      //     PreferredSize(
+      //     preferredSize: Size.fromHeight(50),
+      //     child: Container(
+      //     alignment: Alignment.bottomCenter,
+      //     decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //     begin: Alignment.centerLeft,
+      //     end: Alignment.centerRight,
+      //     colors: [Colors.cyan, Colors.cyanAccent])),
+      //     child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: <Widget>[
+      //     IconButton(
+      //     icon: Icon(Icons.menu),
+      //     ),
+      //     Text(
+      //     'HOME',
+      //     style: TextStyle(
+      // fontWeight: FontWeight.bold,
+      // fontSize: 20,
+      // color: Colors.white,
+      // ),
+      // ),
+      // IconButton(
+      // icon: Icon(Icons.favorite),
+      // )
+      // ],
+      // ),
+      // ),
       endDrawer: Drawer(
         child: ListView(
           children: <Widget>[
@@ -373,7 +411,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.cyan,
+                color: kButtonColorPrimary,
               ),
             ),
             ListTile(
@@ -462,7 +500,24 @@ class HomePage extends StatelessWidget {
       body: Row(
         children: [
           Expanded(
-            child: PostList(),
+            child: Container(
+              padding: EdgeInsets.only(top: 30),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        _PageGreen(),
+                        _PageRed(),
+                        _PageBlue(),
+                        _PageOrange(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
@@ -471,12 +526,12 @@ class HomePage extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
-              color: Colors.blueAccent,
+              color: Colors.cyan,
             ),
             // ignore: deprecated_member_use
             title: Text(
               'HOME',
-              style: TextStyle(color: Colors.blueAccent),
+              style: TextStyle(color: Colors.cyan),
             ),
           ),
           BottomNavigationBarItem(
@@ -529,52 +584,21 @@ class HomePage extends StatelessWidget {
   }
 }
 
-// HOME画面　土台
-class PostList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 30),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            child: ListView(
-              children: [
-                _PostGreen(),
-                _PostRed(),
-                _PostGreen(),
-                _PostRed(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 // HOME画面　パーツ
-class _Post extends StatelessWidget {
+class _Page1 extends StatelessWidget {
   final String name;
   final String message;
-  final String textReason;
   final Color colorPrimary;
   final Color colorPositive;
   final String textPositive;
-  final Color colorNegative;
-  final String textNegative;
 
-  const _Post({
+  const _Page1({
     Key key,
     @required this.name,
     @required this.message,
-    @required this.textReason,
     @required this.colorPrimary,
     @required this.colorPositive,
     @required this.textPositive,
-    @required this.colorNegative,
-    @required this.textNegative,
   }) : super(key: key);
 
   @override
@@ -589,6 +613,7 @@ class _Post extends StatelessWidget {
         ),
         child: Column(
           children: [
+            SizedBox(height: 10),
             ListTile(
               leading: ClipOval(
                 child: Container(
@@ -603,8 +628,10 @@ class _Post extends StatelessWidget {
                   ),
                 ),
               ),
-              title: Text(name),
-              subtitle: Text('2 min ago'),
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8),
@@ -629,31 +656,17 @@ class _Post extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: colorPrimary, width: 2),
-                      ),
-                    ),
-                    child: Text(
-                      textReason,
-                      style: TextStyle(color: Colors.blueAccent),
-                    ),
-                  ),
-                  SizedBox(width: 24),
-                  Expanded(
-                    child: FlatButton(
-                      textColor: colorNegative,
-                      onPressed: () {},
-                      child: Text(textNegative),
-                    ),
-                  ),
-                  SizedBox(width: 8),
                   Expanded(
                     child: FlatButton(
                       color: colorPositive.withOpacity(0.2),
                       textColor: colorPositive,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FatherHomePage(),
+                            ));
+                      },
                       child: Text(textPositive),
                     ),
                   ),
@@ -667,34 +680,339 @@ class _Post extends StatelessWidget {
   }
 }
 
-class _PostGreen extends StatelessWidget {
+class _Page2 extends StatelessWidget {
+  final String name;
+  final String message;
+  final Color colorPrimary;
+  final Color colorPositive;
+  final String textPositive;
+
+  const _Page2({
+    Key key,
+    @required this.name,
+    @required this.message,
+    @required this.colorPrimary,
+    @required this.colorPositive,
+    @required this.textPositive,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return _Post(
-      name: 'お父さんページ',
-      message: 'お父さんはこちらを選択してください。',
-      textReason: 'Report Details',
-      colorPrimary: Colors.greenAccent,
-      colorPositive: Colors.greenAccent,
-      textPositive: 'SELECT',
-      colorNegative: Colors.greenAccent,
-      textNegative: 'Archive',
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Card(
+        elevation: 8,
+        shadowColor: Colors.grey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            ListTile(
+              leading: ClipOval(
+                child: Container(
+                  color: colorPrimary,
+                  width: 48,
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      name.substring(0, 1),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 72),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colorPrimary, width: 4),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Flexible(child: Text(message)),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: colorPositive.withOpacity(0.2),
+                      textColor: colorPositive,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FatherHomePage(),
+                            ));
+                      },
+                      child: Text(textPositive),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class _PostRed extends StatelessWidget {
+class _Page3 extends StatelessWidget {
+  final String name;
+  final String message;
+  final Color colorPrimary;
+  final Color colorPositive;
+  final String textPositive;
+
+  const _Page3({
+    Key key,
+    @required this.name,
+    @required this.message,
+    @required this.colorPrimary,
+    @required this.colorPositive,
+    @required this.textPositive,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return _Post(
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Card(
+        elevation: 8,
+        shadowColor: Colors.grey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            ListTile(
+              leading: ClipOval(
+                child: Container(
+                  color: colorPrimary,
+                  width: 48,
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      name.substring(0, 1),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 72),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colorPrimary, width: 4),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Flexible(child: Text(message)),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: colorPositive.withOpacity(0.2),
+                      textColor: colorPositive,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FatherHomePage(),
+                            ));
+                      },
+                      child: Text(textPositive),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Page4 extends StatelessWidget {
+  final String name;
+  final String message;
+  final Color colorPrimary;
+  final Color colorPositive;
+  final String textPositive;
+
+  const _Page4({
+    Key key,
+    @required this.name,
+    @required this.message,
+    @required this.colorPrimary,
+    @required this.colorPositive,
+    @required this.textPositive,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Card(
+        elevation: 8,
+        shadowColor: Colors.grey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            ListTile(
+              leading: ClipOval(
+                child: Container(
+                  color: colorPrimary,
+                  width: 48,
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      name.substring(0, 1),
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 72),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: colorPrimary, width: 4),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Flexible(child: Text(message)),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: colorPositive.withOpacity(0.2),
+                      textColor: colorPositive,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FatherHomePage(),
+                            ));
+                      },
+                      child: Text(textPositive),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PageGreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _Page1(
+      name: 'お父さんページ',
+      message: 'お父さんはこちらを選択してください。',
+      colorPrimary: Colors.greenAccent[400],
+      colorPositive: Colors.greenAccent[400],
+      textPositive: 'SELECT',
+    );
+  }
+}
+
+class _PageRed extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _Page2(
       name: 'お母さんページ',
       message: 'お母さんはこちらを選択してください。',
-      textReason: 'Pending Reason',
-      colorPrimary: Colors.deepOrangeAccent,
-      colorPositive: Colors.deepOrangeAccent,
+      colorPrimary: Colors.redAccent,
+      colorPositive: Colors.redAccent,
       textPositive: 'SELECT',
-      colorNegative: Colors.deepOrangeAccent,
-      textNegative: 'Decline',
+    );
+  }
+}
+
+class _PageBlue extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _Page3(
+      name: '生徒さんページ',
+      message: '生徒さんはこちらを選択してください。',
+      colorPrimary: Colors.blueAccent,
+      colorPositive: Colors.blueAccent,
+      textPositive: 'SELECT',
+    );
+  }
+}
+
+class _PageOrange extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _Page4(
+      name: '教師一覧ページ',
+      message: '教師一覧はこちらで確認できます。',
+      colorPrimary: Colors.orangeAccent[400],
+      colorPositive: Colors.orangeAccent[400],
+      textPositive: 'SELECT',
     );
   }
 }
