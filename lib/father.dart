@@ -28,8 +28,14 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
     final FirebaseUser user = userState.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("お父さんページ"),
-        backgroundColor: Colors.purpleAccent,
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
       ),
       endDrawer: Drawer(
         child: ListView(
@@ -44,7 +50,7 @@ class _FatherCharacterPage1State extends State<FatherCharacterPage1> {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.cyan,
               ),
             ),
             ListTile(
@@ -465,8 +471,14 @@ class FatherCharacterPage2 extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("お父さんページ"),
-        backgroundColor: Colors.purpleAccent,
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back_ios),
@@ -484,7 +496,7 @@ class FatherCharacterPage2 extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.cyan,
               ),
             ),
             ListTile(
@@ -743,8 +755,14 @@ class FatherCharacterPage3 extends StatelessWidget {
     final FirebaseUser user = userState.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("お父さんページ"),
-        backgroundColor: Colors.purpleAccent,
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back_ios),
@@ -762,7 +780,7 @@ class FatherCharacterPage3 extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.cyan,
               ),
             ),
             ListTile(
@@ -1028,8 +1046,14 @@ class _FatherInterviewRoulettePage1State
     final FirebaseUser user = userState.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("お父さんページ"),
-        backgroundColor: Colors.purpleAccent,
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back_ios),
@@ -1047,7 +1071,7 @@ class _FatherInterviewRoulettePage1State
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.cyan,
               ),
             ),
             ListTile(
@@ -1325,8 +1349,14 @@ class FatherInterviewRoulettePage2 extends StatelessWidget {
     final FirebaseUser user = userState.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("お父さんページ"),
-        backgroundColor: Colors.purpleAccent,
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back_ios),
@@ -1344,7 +1374,7 @@ class FatherInterviewRoulettePage2 extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.cyan,
               ),
             ),
             ListTile(
@@ -1601,8 +1631,14 @@ class _FatherSelfDisclosurePage1State extends State<FatherSelfDisclosurePage1> {
     final FirebaseUser user = userState.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("お父さんページ"),
-        backgroundColor: Colors.purpleAccent,
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back_ios),
@@ -1620,7 +1656,7 @@ class _FatherSelfDisclosurePage1State extends State<FatherSelfDisclosurePage1> {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.cyan,
               ),
             ),
             ListTile(
@@ -2155,8 +2191,14 @@ class FatherSelfDisclosurePage2 extends StatelessWidget {
     final FirebaseUser user = userState.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("お父さんページ"),
-        backgroundColor: Colors.purpleAccent,
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back_ios),
@@ -2174,7 +2216,7 @@ class FatherSelfDisclosurePage2 extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.cyan,
               ),
             ),
             ListTile(
@@ -2672,8 +2714,14 @@ class FatherSelfDisclosurePage3 extends StatelessWidget {
     final FirebaseUser user = userState.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("お父さんページ"),
-        backgroundColor: Colors.purpleAccent,
+        title: Text(
+          "お父さんページ",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back_ios),
@@ -2691,7 +2739,7 @@ class FatherSelfDisclosurePage3 extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.cyan,
               ),
             ),
             ListTile(
