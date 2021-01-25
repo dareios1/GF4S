@@ -4300,24 +4300,38 @@ class _FatherCharacterPage4State extends State<FatherCharacterPage4> {
 
 class FatherCharacterPage5 extends StatelessWidget {
   // 引数から選択肢を受け取る
-  const FatherCharacterPage5({
-    Key key,
-    @required this.choicesQ1,
-    @required this.choicesQ2,
-    @required this.choicesQ3,
-    @required this.choicesQ4,
-    @required this.choicesQ5,
-    @required this.choicesQ6,
-    @required this.choicesQ7,
-    @required this.choicesQ8,
-    @required this.choicesQ9,
-    @required this.choicesQ10,
-    @required this.choicesQ11,
-    @required this.choicesQ12,
-    @required this.choicesQ13,
-    @required this.choicesQ14,
-    @required this.choicesQ15,
-  }) : super(key: key);
+  FatherCharacterPage5({
+    this.choicesQ1,
+    this.choicesQ2,
+    this.choicesQ3,
+    this.choicesQ4,
+    this.choicesQ5,
+    this.choicesQ6,
+    this.choicesQ7,
+    this.choicesQ8,
+    this.choicesQ9,
+    this.choicesQ10,
+    this.choicesQ11,
+    this.choicesQ12,
+    this.choicesQ13,
+    this.choicesQ14,
+    this.choicesQ15,
+  }) : this.totalPoint = (choicesQ1 +
+                choicesQ2 +
+                choicesQ3 +
+                choicesQ4 +
+                choicesQ5 +
+                choicesQ6 +
+                choicesQ7 +
+                choicesQ8 +
+                choicesQ9 +
+                choicesQ10 +
+                choicesQ11 +
+                choicesQ12 +
+                choicesQ13 +
+                choicesQ14 +
+                choicesQ15) *
+            1.33;
 
   final num choicesQ1;
   final num choicesQ2;
@@ -4334,8 +4348,92 @@ class FatherCharacterPage5 extends StatelessWidget {
   final num choicesQ13;
   final num choicesQ14;
   final num choicesQ15;
+  final num totalPoint;
 
-  // num totalPoint = choicesQ1 + choicesQ2;
+  // FatherCharacterPage5({
+  //   Key key,
+  //   @required this.choicesQ1,
+  //   @required this.choicesQ2,
+  //   @required this.choicesQ3,
+  //   @required this.choicesQ4,
+  //   @required this.choicesQ5,
+  //   @required this.choicesQ6,
+  //   @required this.choicesQ7,
+  //   @required this.choicesQ8,
+  //   @required this.choicesQ9,
+  //   @required this.choicesQ10,
+  //   @required this.choicesQ11,
+  //   @required this.choicesQ12,
+  //   @required this.choicesQ13,
+  //   @required this.choicesQ14,
+  //   @required this.choicesQ15,
+  // }) : super(key: key);
+
+  // FatherCharacterPage5.a(
+  //     num choicesQ1,
+  //     num choicesQ2,
+  //     num choicesQ3,
+  //     num choicesQ4,
+  //     num choicesQ5,
+  //     num choicesQ6,
+  //     num choicesQ7,
+  //     num choicesQ8,
+  //     num choicesQ9,
+  //     num choicesQ10,
+  //     num choicesQ11,
+  //     num choicesQ12,
+  //     num choicesQ13,
+  //     num choicesQ14,
+  //     num choicesQ15)
+  //     : this.choicesQ1 = choicesQ1,
+  //       this.choicesQ2 = choicesQ2,
+  //       this.choicesQ3 = choicesQ3,
+  //       this.choicesQ4 = choicesQ4,
+  //       this.choicesQ5 = choicesQ5,
+  //       this.choicesQ6 = choicesQ6,
+  //       this.choicesQ7 = choicesQ7,
+  //       this.choicesQ8 = choicesQ8,
+  //       this.choicesQ9 = choicesQ9,
+  //       this.choicesQ10 = choicesQ10,
+  //       this.choicesQ11 = choicesQ11,
+  //       this.choicesQ12 = choicesQ12,
+  //       this.choicesQ13 = choicesQ13,
+  //       this.choicesQ14 = choicesQ14,
+  //       this.choicesQ15 = choicesQ15;
+  //
+  // final double totalPoint = (choicesQ1 +
+  //         choicesQ2 +
+  //         choicesQ3 +
+  //         choicesQ4 +
+  //         choicesQ5 +
+  //         choicesQ6 +
+  //         choicesQ7 +
+  //         choicesQ8 +
+  //         choicesQ9 +
+  //         choicesQ10 +
+  //         choicesQ11 +
+  //         choicesQ12 +
+  //         choicesQ13 +
+  //         choicesQ14 +
+  //         choicesQ15) *
+  //     1.33;
+  //
+  // FatherCharacterPage5.b(
+  //     {this.choicesQ1,
+  //     this.choicesQ2,
+  //     this.choicesQ3,
+  //     this.choicesQ4,
+  //     this.choicesQ5,
+  //     this.choicesQ6,
+  //     this.choicesQ7,
+  //     this.choicesQ8,
+  //     this.choicesQ9,
+  //     this.choicesQ10,
+  //     this.choicesQ11,
+  //     this.choicesQ12,
+  //     this.choicesQ13,
+  //     this.choicesQ14,
+  //     this.choicesQ15});
 
   // テキストフィールドのステートを管理
   // final _stateController = TextEditingController();
@@ -4362,8 +4460,6 @@ class FatherCharacterPage5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 表示に使用するデータを取得
-    // final typeData = typeDataList[getType()];
     // ユーザー情報を受け取る
     final UserState userState = Provider.of<UserState>(context);
     final FirebaseUser user = userState.user;
